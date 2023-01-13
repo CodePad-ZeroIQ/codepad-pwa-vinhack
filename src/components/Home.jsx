@@ -7,8 +7,8 @@ import { VscCode } from "react-icons/vsc";
 
 const Home = ({ open }) => {
   const menus = [
-    { name: "All Folder", link: "/", icon: FiFolder },
-    // { name: "Scan", link: "/", icon: TbReportAnalytics },
+    { name: "Scan", link: "/", icon: TbReportAnalytics },
+    { name: "All Folder", link: "/Folders", icon: FiFolder },
     { name: "Settings", link: "/Settings", icon: RiSettings4Line },
     { name: "Editor", link: "/Editor", icon: VscCode },
   ];
