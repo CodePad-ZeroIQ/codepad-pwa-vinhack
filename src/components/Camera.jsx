@@ -35,7 +35,7 @@ const Camera = () => {
 
   const handleCropClick = () => {
     if (cropper) {
-      const imgurl = cropper.getCroppedCanvas().toDataURL();
+      const imgurl = cropper.getCroppedCanvas().toDataURL("image/jpeg",0.4);
       const img = document.createElement("img");
       img.src = imgurl;
       console.log("image url", imgurl);
