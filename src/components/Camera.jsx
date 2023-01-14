@@ -103,7 +103,7 @@ const Camera = () => {
   // }
 
   return (
-     <div class="w-screen max-h-[500px] ">
+     <div class="max-w-[380px] max-h-[500px] flex justify-center mx-auto">
       {la && 
       <div>
       <input
@@ -111,13 +111,15 @@ const Camera = () => {
         type="file"
         onChange={handleImageChange}
       />
-     <img id="image" className="mt-2" src={imageSrc} alt="" /> 
-      {hideSubmit && <button
+      
+     <img id="image" className="" src={imageSrc} alt="" /> 
+     {hideSubmit && <button
         className="bg-white w-16 h-10 rounded-md mt-2 "
         onClick={handleCropClick}
       >
         Submit
-      </button>} </div>
+      </button>} 
+      </div>
       }
 
       

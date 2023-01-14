@@ -13,12 +13,6 @@ function Main() {
     {  id:7,name: "DSA",},
     {  id:8,name: "DAA",},
     {  id:9,name: "OOPS",},
-    {  id:10,name: "DSA",},
-    {  id:11,name: "DAA",},
-    {  id:12,name: "OOPS",},
-    {  id:13,name: "DSA",},
-    {  id:14,name: "DAA",},
-    {  id:15,name: "OOPS",},
   ];
   // const [open, setOpen] = useState(true);
   // const handleClick = () => {
