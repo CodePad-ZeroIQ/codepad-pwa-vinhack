@@ -5,10 +5,12 @@ import Loading from "./Loading";
 import { HiMenuAlt3 } from "react-icons/hi";
 import Home from "./Home";
 function Edit() {
+  const EDITOR_URL = "https://codepad-backend-production.up.railway.app"
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   var submitid = -1;
   // var endpoint = "localhost:4000";
   // const url = "http://" + endpoint;
+
   const [open, setOpen] = useState(false);
   const handleClick = () => {
     setOpen((prev) => !prev);
@@ -32,7 +34,7 @@ function Edit() {
   const [elementVisible, setElementVisible] = useState(false);
   const fetchOutput = async (submitid, uri) => {
     try {
-      const response = await fetch(`http://localhost:4000/${uri}/${submitid}`);
+      const response = await fetch(`${EDITOR_URL}/${uri}/${submitid}`);
       const responsedata = await response.text();
       setoutput(responsedata);
     } catch (error) {
@@ -42,7 +44,7 @@ function Edit() {
   const fetchData = async (submitid) => {
     try {
       await delay(10000);
-      const response = await fetch(`http://localhost:4000/compile/${submitid}`);
+      const response = await fetch(`${EDITOR_URL}/compile/${submitid}`);
       const jsonResponse = await response.json();
       if (jsonResponse.executing) {
         await delay(10000);
@@ -129,7 +131,8 @@ function Edit() {
       redirect: "follow",
     };
 
-    fetch("http://localhost:4000/compile", requestOptions)
+
+    fetch(`${EDITOR_URL}/compile`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         submitid = result.id;
@@ -233,7 +236,7 @@ function Edit() {
                               ? { display: "block" }
                               : { display: "none" }
                           }
-                          className="h-48 py-1 overflow-y-auto text-gray-700 dark:text-gray-200 bg-white z-20 items-end text-right absolute  top-0 right-0 bg-black"
+                          className="h-48 py-1 overflow-y-auto text-gray-700 dark:text-gray-200 z-20 items-end text-right absolute  top-0 right-0 bg-black"
                         >
                           <ul
                             onBlur={(e) => setElementVisible(false)}
