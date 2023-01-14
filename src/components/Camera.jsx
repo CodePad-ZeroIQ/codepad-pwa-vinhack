@@ -65,6 +65,7 @@ const Camera = () => {
         .then((data) => {
           console.log("Success:", data.output);
           window.localStorage.setItem("code",data.output);
+          window.location.href='/editor';
         })
         .catch((error) => {
           console.error("Error:", error);
