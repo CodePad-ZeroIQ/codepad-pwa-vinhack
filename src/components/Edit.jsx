@@ -10,7 +10,7 @@ function Edit() {
   var submitid = -1;
   // var endpoint = "localhost:4000";
   // const url = "http://" + endpoint;
-  
+
   const [open, setOpen] = useState(false);
   const handleClick = () => {
     setOpen((prev) => !prev);
@@ -236,7 +236,7 @@ function Edit() {
                               ? { display: "block" }
                               : { display: "none" }
                           }
-                          className="h-48 py-1 overflow-y-auto text-gray-700 dark:text-gray-200 bg-white z-20 items-end text-right absolute  top-0 right-0 bg-black"
+                          className="h-48 py-1 overflow-y-auto text-gray-700 dark:text-gray-200 z-20 items-end text-right absolute  top-0 right-0 bg-black"
                         >
                           <ul
                             onBlur={(e) => setElementVisible(false)}
