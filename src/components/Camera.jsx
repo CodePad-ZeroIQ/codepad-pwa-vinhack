@@ -58,7 +58,8 @@ const Camera = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
+          console.log("Success:", data.output);
+          window.localStorage.setItem("code",data.output);
         })
         .catch((error) => {
           console.error("Error:", error);
