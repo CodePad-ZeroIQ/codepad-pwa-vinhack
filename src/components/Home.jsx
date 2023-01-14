@@ -1,5 +1,4 @@
 import React from "react";
-import { RiSettings4Line } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { FiFolder } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -9,7 +8,6 @@ const Home = ({ open }) => {
   const menus = [
     { name: "Scan", link: "/", icon: TbReportAnalytics },
     { name: "All Folder", link: "/Folders", icon: FiFolder },
-    { name: "Settings", link: "/Settings", icon: RiSettings4Line },
     { name: "Editor", link: "/Editor", icon: VscCode },
   ];
   return (

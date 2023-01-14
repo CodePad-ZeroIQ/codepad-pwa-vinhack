@@ -12,10 +12,15 @@ function Edit() {
   // const url = "http://" + endpoint;
 
   const [open, setOpen] = useState(false);
+  const [show,setShow] = useState(false);
   const handleClick = () => {
     setOpen((prev) => !prev);
     console.log("render");
   };
+  const handleCreateFolderShow = () => {
+    setShow((prev) => !prev)
+    console.log("clicked")
+  }
   const textRef = React.useRef();
   const [code, setCode] = React.useState(`${window.localStorage?.getItem('code') || ""}`);
   const [input, setInput] = React.useState(``);
@@ -180,9 +185,9 @@ function Edit() {
     setElementVisible(true);
   }
 
-  function handleSave(){
-    console.log("save clicked")
-  }
+  // function handleSave(){
+  //   console.log("save clicked")
+  // }
 
   return (
     <>
@@ -207,12 +212,15 @@ function Edit() {
                     <h3 className="text-center m-2 text-[#fff] w-[60%] px-3">
                       CodePad
                     </h3>
+                    {/* <button className='mr-8 text-white' onClick={()=>handleCreateFolderShow()}>+</button> */}
+
                     <button
                       type="button"
-                      class=" text-white rounded cursor-pointer  focus:text-blue-300  pr-3"
-                      onClick={()=>handleSave()}
+                      class=" text-white rounded cursor-pointe  pr-3"
+                      onClick={()=>handleCreateFolderShow()}
                     >
                       <svg
+                      
                         aria-hidden="true"
                         className="w-5 h-5 "
                         fill="currentColor"
@@ -255,6 +263,19 @@ function Edit() {
                       </button>
                     </div>
                   </div>
+                  {
+        show && <div>
+          <div className='flex flex-col h-44  justify-center mx-2'>
+           <div>
+            <div className="mb-2 ">Create new Folder</div>
+            <input className='text-sm w-full p-2' placeholder='type here'/>
+            <button className='text-sm bg-red-700 w-12 rounded-tr-md rounded-br-md'>Create</button>
+           </div>
+           <h1>OR</h1>
+           <div>Add to existing folder</div>
+          </div>
+        </div>
+       }
                   {isloading ? (
                     <Loading></Loading>
                   ) : (
@@ -318,6 +339,13 @@ function Edit() {
                   )}
 
                   <hr></hr>
+                  <textarea
+                      onChange={(evn) => setInput(evn.target.value)}
+                      id="chat"
+                      rows="1"
+                      className="block mt-2 mx-4 p-2.5 text-sm text-gray-900 bg-white w-5/6  rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+                      placeholder="explaination..."
+                    ></textarea>
                   <div className="flex items-center justify-center px-3 py-3 mt-2  dark:border-gray-600 w-[80vw] overflow-x-scroll pl-[85px]">
                     <span onClick={()=>{gpt("formatCode")}} class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
                       Format
@@ -368,13 +396,6 @@ function Edit() {
                       Pink
                     </span> */}
                   </div>
-                  <textarea
-                      // onChange={(evn) => setExpInput(evn.target.value)}
-                      id="chat"
-                      rows="1"
-                      className="block mx-4 p-2.5 text-sm text-gray-900 bg-white w-5/6  rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
-                      placeholder={expInput}
-                    ></textarea>
                   <div className="flex items-center justify-center px-3 py-3 mt-2  dark:border-gray-600">
                     <textarea
                       onChange={(evn) => setInput(evn.target.value)}

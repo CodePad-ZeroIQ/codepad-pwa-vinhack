@@ -1,4 +1,4 @@
-import {React,useState,useEffect} from 'react'
+import {React,useState,useEffect,useRef} from 'react'
 import { HiMenuAlt3 } from "react-icons/hi";
 import Home from "../components/Home"
 import File from "../components/File"
@@ -6,6 +6,8 @@ import File from "../components/File"
 
 function NoteBook() {
     const [open, setOpen] = useState(false);
+    const [show,setShow] = useState(false);
+    const fileName = useRef("");
     const handleClick = () => {
       setOpen(prev => !prev);
       console.log("render")
@@ -16,6 +18,32 @@ function NoteBook() {
       console.log(window.localStorage.getItem('file'))
     }, [])
     
+    const handleCreateFile = () => {
+      fetch("https://codepad-backend-production.up.railway.app/file", {
+          method: "POST", // or 'PUT'
+          body: JSON.stringify({
+            fid:"63c1b6041d9d2bbb8bcb1303", 
+            fName: fileName.current.value.trim(),
+            scode:"clg", 
+            lang:"pypi"
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data)
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      console.log( fileName.current.value.trim())
+    }
+    const handleCreateFolderShow = () => {
+      setShow((prev) => !prev)
+    }
     const folders = [
         { id:1, name: "DSA",files:[
             { id:101,name:"abc.py", lang:"py", source:"print('asdf') \n print('yoyo')"},
@@ -51,9 +79,18 @@ function NoteBook() {
             onClick={handleClick}
           />
            <div className='text-white mr-24'>All NoteBooks</div>
+           <button className='mr-8 text-white' onClick={()=>handleCreateFolderShow()}>+</button>
         </div>
+        {
+        show && <div>
+          <div className='flex h-8 mb-2 justify-center mx-2'>
+            <input ref={fileName} className='text-sm w-full p-2' placeholder='type here'/>
+            <button onClick={()=>handleCreateFile()} className='text-sm bg-red-700 w-12 rounded-tr-md rounded-br-md'>ADD</button>
+          </div>
+        </div>
+       }
       </div>
-      <div className="flex flex-col flex-grow">
+      <div className="flex flex-col flex-grow mx-2">
       {folders?.map((item) => (
         (item.id === parseInt(window.localStorage.getItem('file')) && (
             item?.files?.map((x) => (
