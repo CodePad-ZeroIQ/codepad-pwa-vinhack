@@ -19,6 +19,7 @@ function Edit() {
   const textRef = React.useRef();
   const [code, setCode] = React.useState(`${window.localStorage?.getItem('code') || ""}`);
   const [input, setInput] = React.useState(``);
+  const [expInput, setExpInput] = React.useState(``);
   const [lang, setLang] = React.useState(`Python (Pypy)`);
   const [cid, setCid] = useState(99);
   const [compilerVisible, setCompilerVisible] = useState(true);
@@ -85,6 +86,32 @@ function Edit() {
     setElementVisible(false);
   }
 
+  function gpt(endpoint){
+    // fetch(`http://127.0.0.1:8000/api/${endpoint}`, {
+      fetch(`https://zfqj8i.deta.dev/api/${endpoint}`, {
+        method: "POST", // or 'PUT'
+        body: JSON.stringify({
+          source: code,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data.output);
+          if (data.at==="source"){
+            setCode(data.output);
+          } else {
+            setExpInput(data.output);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+  }
+
   //function to list available compilers from backend
   // function onTestClick(e) {
   //   e.preventDefault();
@@ -117,7 +144,7 @@ function Edit() {
     console.log("run clicked");
 
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Content-Type", "application/json", "");
     var raw = JSON.stringify({
       compilerId: cid,
       source: code,
@@ -126,7 +153,10 @@ function Edit() {
 
     var requestOptions = {
       method: "POST",
-      headers: myHeaders,
+      headers: {
+        "Content-Type":"application/json",
+        "Access-Control-Allow-Origin":"*",
+      },
       body: raw,
       redirect: "follow",
     };
@@ -289,26 +319,26 @@ function Edit() {
 
                   <hr></hr>
                   <div className="flex items-center justify-center px-3 py-3 mt-2  dark:border-gray-600 w-[80vw] overflow-x-scroll pl-[85px]">
-                    <span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                      Default
+                    <span onClick={()=>{gpt("formatCode")}} class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                      Format
                     </span>
-                    <span class="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">
-                      Dark
+                    <span onClick={()=>{gpt("explainBreif")}} class="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">
+                      Explain Br
                     </span>
-                    <span class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
-                      Red
+                    <span onClick={()=>{gpt("explainDetail")}} class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                      Explain Dt
                     </span>
-                    <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                    {/* <span onClick={()=>{gpt("formatCode")}} class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
                       Green
+                    </span> */}
+                    {/* <span onClick={()=>{gpt("formatCode")}} class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
+                      Time Complexity
+                    </span> */}
+                    <span onClick={()=>{gpt("addComments")}} class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-indigo-900 dark:text-indigo-300">
+                      Add Comments
                     </span>
-                    <span class="bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
-                      Yellow
-                    </span>
-                    <span class="bg-indigo-100 text-indigo-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-indigo-900 dark:text-indigo-300">
-                      Indigo
-                    </span>
-                    <span class="bg-purple-100 text-purple-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-purple-900 dark:text-purple-300">
-                      Purple
+                    {/* <span class="bg-purple-100 text-purple-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-purple-900 dark:text-purple-300">
+                      Space Complexity
                     </span>
                     <span class="bg-pink-100 text-pink-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-pink-900 dark:text-pink-300">
                       Pink
@@ -336,8 +366,15 @@ function Edit() {
                     </span>
                     <span class="bg-pink-100 text-pink-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-pink-900 dark:text-pink-300">
                       Pink
-                    </span>
+                    </span> */}
                   </div>
+                  <textarea
+                      // onChange={(evn) => setExpInput(evn.target.value)}
+                      id="chat"
+                      rows="1"
+                      className="block mx-4 p-2.5 text-sm text-gray-900 bg-white w-5/6  rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+                      placeholder={expInput}
+                    ></textarea>
                   <div className="flex items-center justify-center px-3 py-3 mt-2  dark:border-gray-600">
                     <textarea
                       onChange={(evn) => setInput(evn.target.value)}

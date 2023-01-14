@@ -51,7 +51,8 @@ const Camera = () => {
       // console.log(final)
       let base = imgurl.split(",")[1];
       // setFinal(base);
-      fetch("https://zfqj8i.deta.dev/api/recognizeText", {
+      fetch("http://127.0.0.1:8000/api/recognizeText", {
+      // fetch("https://zfqj8i.deta.dev/api/recognizeText", {
         method: "POST", // or 'PUT'
         body: JSON.stringify({
           base64: base,
