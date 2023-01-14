@@ -147,6 +147,10 @@ function Edit() {
     setElementVisible(true);
   }
 
+  function handleSave(){
+    console.log("save clicked")
+  }
+
   return (
     <>
       <div>
@@ -173,6 +177,7 @@ function Edit() {
                     <button
                       type="button"
                       class=" text-white rounded cursor-pointer  focus:text-blue-300  pr-3"
+                      onClick={()=>handleSave()}
                     >
                       <svg
                         aria-hidden="true"
